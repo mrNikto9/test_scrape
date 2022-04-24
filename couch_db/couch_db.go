@@ -256,12 +256,12 @@ func (cc *CouchDBClient) IsProductExists(productGroupId string) bool {
 
 func (cc *CouchDBClient) GetExcelDoc() {
 
-	client, err := kivik.New("couch", "http://admin:123321@localhost:5984/")
-	if err != nil {
-		panic(err)
-	}
+	// client, err := kivik.New("couch", "http://admin:123321@localhost:5984/")
+	// if err != nil {
+		// panic(err)
+	// }
 
-	cdb := client.DB("ty_categories")
+	// cdb := client.DB("ty_categories")
 
 	// query := map[string]interface{}{
 	// 	"selector": map[string]interface{}{

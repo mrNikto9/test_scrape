@@ -27,7 +27,7 @@ func init() {
 	setup.LogrusSetup()
 
 	// logging setup
-	logging.Setup()
+	logging.Setup() 
 
 }
 

@@ -12,7 +12,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 )
-
+ 
 // type Ty_handler struct {
 // 	// couch database client
 // 	tt excel_parser.ExcelParser
@@ -25,7 +25,7 @@ const (
 
 var (
 	locker = stateUnlocked
-	tt     excel_parser.ExcelParser
+	// tt     excel_parser.ExcelParser
 )
 
 func InitScraper(w http.ResponseWriter, r *http.Request) {
@@ -165,6 +165,29 @@ func InitUpdater(w http.ResponseWriter, r *http.Request) {
 
 func GetExcel(w http.ResponseWriter, r *http.Request) {
 
-	tt.GetExcelData()
+	// tt.GetExcelData()
+	ep, err := excel_parser.NewExcelParser()
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{
+			"msg": err.Error(),
+		})
+
+		return
+	}
+
+	err = ep.GetExcelData()
+
+	msg := "categories updated successfully"
+
+	if err != nil {
+		msg = err.Error()
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"msg": msg,
+	})
 
 }
