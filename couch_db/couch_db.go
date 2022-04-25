@@ -15,7 +15,6 @@ import (
 
 	"github.com/Jeffail/gabs/v2"
 	_ "github.com/go-kivik/couchdb/v4" // The CouchDB driver
-	"github.com/go-kivik/kivik/v4"
 	kk "github.com/go-kivik/kivik/v4"
 
 	// "github.com/google/go-cmp/cmp"
@@ -256,29 +255,6 @@ func (cc *CouchDBClient) IsProductExists(productGroupId string) bool {
 
 func (cc *CouchDBClient) GetExcelDoc() {
 
-	// client, err := kivik.New("couch", "http://admin:123321@localhost:5984/")
-	// if err != nil {
-		// panic(err)
-	// }
-
-	// cdb := client.DB("ty_categories")
-
-	// query := map[string]interface{}{
-	// 	"selector": map[string]interface{}{
-	// 		"parent_id": 998,
-	// 	},
-	// }
-
-	// rows, _ := cdb.Find(context.TODO(), query)
-
-	// fmt.Println(rows.TotalRows())
-	row := cdb.Get(context.TODO(), "ty_categories")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// var cow Animal
-	// if err = row.ScanDoc(&cow); err != nil {
-	// 	panic(err)
-	// }
+	row := cc.cdb.Get(context.TODO(), "ty_categories")
 	fmt.Println(row)
 }

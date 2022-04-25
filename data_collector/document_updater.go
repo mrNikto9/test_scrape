@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 	"scraper_trendyol/models/bagisto"
-	models "scraper_trendyol/models/couch_db"
+	models "scraper_trendyol/models/couch_db_model"
 	"scraper_trendyol/pkg/logging"
 	"strconv"
 

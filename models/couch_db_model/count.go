@@ -1,6 +1,9 @@
-package models
+package couch_db_model
 
-import "scraper_trendyol/models/bagisto"
+import (
+	"scraper_trendyol/models"
+	"scraper_trendyol/models/bagisto"
+)
 
 type CountResponse struct {
 	Rows []struct {
@@ -14,5 +17,11 @@ type ModelResponse struct {
 		Key   string                      `json:"key"`
 		Value map[string]interface{}      `json:"value"`
 		Doc   bagisto.BagistoProductModel `json:"doc"`
+	} `json:"rows"`
+}
+
+type CategoryModelResponse struct {
+	Rows []struct {
+		Doc models.Category `json:"doc"`
 	} `json:"rows"`
 }

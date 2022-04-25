@@ -2,17 +2,21 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"scraper_trendyol/data_collector"
 	"scraper_trendyol/excel_parser"
+	"scraper_trendyol/models/couch_db_model"
 	"scraper_trendyol/pkg/helper"
 	"scraper_trendyol/pkg/logging"
+
 	"strconv"
 	"sync/atomic"
 
 	"github.com/sirupsen/logrus"
 )
- 
+
 // type Ty_handler struct {
 // 	// couch database client
 // 	tt excel_parser.ExcelParser
@@ -163,31 +167,28 @@ func InitUpdater(w http.ResponseWriter, r *http.Request) {
 
 // ----------------------------------------------------------------------------------------------------------------
 
+type people struct {
+	Number int `json:"number"`
+}
+
 func GetExcel(w http.ResponseWriter, r *http.Request) {
 
-	// tt.GetExcelData()
-	ep, err := excel_parser.NewExcelParser()
+	resp, err := http.Get("http://admin:123321@localhost:5984/ty_categories/_all_docs?include_docs=true")
+	if err != nil {
+		fmt.Println("error")
+	}
+	defer resp.Body.Close()
+
+	data, _ := ioutil.ReadAll(resp.Body)
+	var response couch_db_model.CategoryModelResponse
+	err = json.Unmarshal(data, &response)
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{
-			"msg": err.Error(),
-		})
-
-		return
+		fmt.Println("error")
 	}
 
-	err = ep.GetExcelData()
+	rows := response.Rows
 
-	msg := "categories updated successfully"
-
-	if err != nil {
-		msg = err.Error()
-	}
-
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{
-		"msg": msg,
-	})
+	fmt.Println(rows[1].Doc.Slug)
 
 }
