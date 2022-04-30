@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"net/http"
 	"scraper_trendyol/data_collector"
@@ -189,6 +190,14 @@ func GetExcel(w http.ResponseWriter, r *http.Request) {
 
 	rows := response.Rows
 
-	fmt.Println(rows[1].Doc.Slug)
+	tmpl := template.Must(template.ParseFiles("./views/pages/data_table.html", "./views/partials/vertical_menu.html", "./views/layouts/default.html"))
+	tmpl.ExecuteTemplate(w, "default", rows)
+
+	// for i := 1; i < len(rows); i++ {
+	// 	// sum += i
+	// 	fmt.Println(rows[i])
+	// }
+
+	// fmt.Println(len(rows))
 
 }

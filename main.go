@@ -27,7 +27,7 @@ func init() {
 	setup.LogrusSetup()
 
 	// logging setup
-	logging.Setup() 
+	logging.Setup()
 
 }
 
@@ -79,7 +79,7 @@ func Dashboard(w http.ResponseWriter, r *http.Request) {
 		data := map[string]interface{}{
 			"username": username,
 		}
-		tmpl := template.Must(template.ParseFiles("./views/pages/index.html", "./views/layouts/default.html"))
+		tmpl := template.Must(template.ParseFiles("./views/pages/index.html", "./views/layouts/default.html", "./views/partials/vertical_menu.html"))
 		tmpl.ExecuteTemplate(w, "default", data)
 
 	} else {
